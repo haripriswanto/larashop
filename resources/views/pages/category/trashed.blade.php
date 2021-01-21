@@ -14,7 +14,7 @@
 
 <div class="card border-primary-lighter">
     <div class="card-header bg bg-primary-lighter text-white">
-        Data Kategori
+        Data Kategori Trash
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -38,10 +38,10 @@
                 <div class="col-sm-5">
                     <ul class="nav nav-pills card-header-pills">
                         <li class="nav-item">
-                            <a class="nav-link active" href="{{route('categories.index')}}">Published</a>
+                            <a class="nav-link" href="{{route('categories.index')}}">Published</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{route('categories.trash')}}">Trash</a>
+                            <a class="nav-link active" href="{{route('categories.trash')}}">Trash</a>
                         </li>
                     </ul>
                 </div>
@@ -75,19 +75,15 @@
                             @endif
                         </td>
                         <td>
-                            <a class="btn btn-outline-purple btn-sm" href="{{ route('categories.edit', [$cat->id]) }}">
-                                <i class="fas fa-pencil-alt"></i>
+                            <a class="btn btn-outline-success btn-sm" href="{{ route('categories.restore', [$cat->id]) }}" title="Restore Kategori {{ $cat->name }}">
+                                <i class="fas fa-trash-restore"></i>
                             </a>
-                            <a class="btn btn-outline-info btn-sm" href="{{ route('categories.show', [$cat->id]) }}">
-                                <i class="fas fa-eye"></i>
-                            </a>
-                                <form action="{{ route('categories.destroy', [$cat->id]) }}" method="post" class="d-inline" onsubmit="return confirm('Move Data {{$cat->name}} To trash?') ">
-                                    @csrf
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <button type="submit" class="btn btn-outline-danger btn-sm">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </form>
+
+                            <form class="d-inline" action="{{ route('categories.delete-permanent', [$cat->id]) }}" method="POST" onsubmit="return confirm('Yakin ingin hapus permanent kategori {{ $cat->name }} ?')">
+                                @csrf
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button class="btn btn-outline-danger btn-sm" title="Hapus Permanen Kategori {{ $cat->name }}"><i class="fas fa-times-circle"></i></button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach

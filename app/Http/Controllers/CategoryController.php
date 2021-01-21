@@ -142,8 +142,33 @@ class CategoryController extends Controller
     public function trash()
     {
         $deleted_category = Category::onlyTrashed()->paginate(10);
-        $title = "Manage Category";
+        $title = "Trashed Category";
 
-        return view('pages.category.index', ['categories' => $deleted_category, 'title' => $title]);
+        return view('pages.category.trashed', ['categories' => $deleted_category, 'title' => $title]);
+    }
+
+    public function restore($id)
+    {
+        $category = Category::withTrashed()->findOrFail($id);
+
+        if ($category->trashed()) {
+            $category->restore();
+        } else {
+            return redirect()->route('categories.index')->with('status', 'Kategori ' . $category->name . ' tidak ada di folder trash');
+        }
+        return redirect()->route('categories.index')->with('status', 'Berhasil Restore Kategori ' . $category->name);
+    }
+
+    public function deletePermanent($id)
+    {
+        $category = Category::withTrashed()->findOrFail($id);
+
+        if (!$category->trashed()) {
+            return redirect()->route('categories.index')->with('status', 'tidak bisa menghapus kategori aktif !');
+        } else {
+            $category->forceDelete();
+
+            return redirect()->route('categories.index')->with('status', 'Berhasil Menghapus permanent kategori ' . $category->name);
+        }
     }
 }
