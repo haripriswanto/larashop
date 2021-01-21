@@ -49,8 +49,12 @@
                 <div class="form-group mb-5">
                     <label for="">Avatar Image</label>
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input" name="avatar" id="avatar">
-                        <label class="custom-file-label" for="avatar">Pilih Gambar</label>
+                        <div class="custom-file col-10">
+                            <input type="file" class="custom-file-input" name="image" id="image" onchange="previewImg()">
+                            <label class="custom-file-label" for="avatar">Pilih Gambar</label>
+                        </div>
+                        <img src="{{ asset('storage/avatars/default.png') }}" class="img-thumbnail img-preview" width="60">
+                        <small class="text-muted">Kosongkan jika tidak ingin mengubah avatar</small>
                     </div>
                 </div>
     

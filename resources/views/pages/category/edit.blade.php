@@ -24,17 +24,16 @@
                 </div>
                 <div class="form-group">
                     <label for="image">Category Image</label>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" name="image" id="image">
+                    <div class="custom-file col-sm-12 mb-2">
+                        <input type="file" class="custom-file-input" name="image" id="image" onchange="previewImg()">
                         <label class="custom-file-label">Pilih Gambar</label>
-                    </div>
-                    <div class="clearfix"><br></div>
-                    @if ($category->image)
-                        <img src="{{ asset('storage/'.$category->image) }}" class="img-thumbnail img-preview" width="50">
-                    @else
-                        <img src="{{ asset('storage/404/no_image.jpg') }}" class="img-thumbnail img-preview" width="50">
-                    @endif
                         <small class="text-muted">Kosongkan jika tidak ingin mengubah image</small>
+                    </div>
+                    @if ($category->image)
+                    <img src="{{ asset('storage/'.$category->image) }}" class="img-thumbnail img-preview mt-3" width="150">
+                    @else
+                    <img src="{{ asset('storage/404/no_image.jpg') }}" class="img-thumbnail img-preview mt-3" width="150">
+                    @endif
                 </div>
     
                 <hr class="my-3">

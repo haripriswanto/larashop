@@ -48,9 +48,9 @@
                 </div>
 
                 <div class="form-group">
-                        <label for="avatar">Avatar Image</label>
+                        <label for="image">Avatar Image</label>
                         <div class="custom-file col-8">
-                            <input type="file" class="custom-file-input" name="avatar" id="avatar">
+                            <input type="file" class="custom-file-input" name="image" id="image" onchange="previewImg()">
                             <label class="custom-file-label">Pilih Gambar</label>
                         </div>
                         @if ($user->avatar)

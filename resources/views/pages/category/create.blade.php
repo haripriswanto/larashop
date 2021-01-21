@@ -21,8 +21,12 @@
                 <div class="form-group mb-5">
                     <label for="">Category Image</label>
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input" name="image" id="image">
-                        <label class="custom-file-label" for="image">Pilih Gambar</label>
+                        <div class="custom-file col-10">
+                            <input type="file" class="custom-file-input" name="image" id="image" onchange="previewImg()">
+                            <label class="custom-file-label" for="image">Pilih Gambar</label>
+                        </div>
+                        <img src="{{ asset('storage/404/no_image.jpg') }}" class="img-thumbnail img-preview" width="60">
+                        <small class="text-muted">Kosongkan jika tidak ingin mengubah Image</small>
                     </div>
                 </div>
     

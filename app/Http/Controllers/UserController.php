@@ -59,8 +59,8 @@ class UserController extends Controller
         $user->email = $request->get('email');
         $user->password = \Hash::make($request->get('password'));
 
-        if ($request->file('avatar')) {
-            $file = $request->file('avatar')->store('avatars', 'public');
+        if ($request->file('image')) {
+            $file = $request->file('image')->store('avatars', 'public');
 
             $user->avatar = $file;
         }
@@ -116,11 +116,11 @@ class UserController extends Controller
         $user->phone = $request->get('phone');
         $user->status = $request->get('status');
 
-        if ($request->file('avatar')) {
+        if ($request->file('image')) {
             if ($user->avatar && file_exists(storage_path('app/public/' . $user->avatar))) {
                 \Storage::delete('public/' . $user->avatar);
             }
-            $file = $request->file('avatar')->store('avatars', 'public');
+            $file = $request->file('image')->store('avatars', 'public');
             $user->avatar = $file;
         }
 
