@@ -14,6 +14,9 @@ class AdministratorSeeder extends Seeder
      */
     public function run()
     {
+
+        // DB::table('users')->insert([
+
         $administrator = new \App\Models\User;
         $administrator->username = "administrator";
         $administrator->name = "Site Administrator";

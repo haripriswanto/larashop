@@ -12,8 +12,8 @@ class Category extends Model
     use SoftDeletes;
     use HasFactory, Notifiable;
 
-    protected $fillable = [
-        'name',
-        'slug'
-    ];
+    public function books()
+    {
+        return $this->belongsToMany('App\Models\Book');
+    }
 }

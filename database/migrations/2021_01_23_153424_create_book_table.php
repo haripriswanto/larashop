@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBooksTable extends Migration
+class CreateBookTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,21 +14,22 @@ class CreateBooksTable extends Migration
     public function up()
     {
         Schema::create('books', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('title');
             $table->string('slug')->unique();
-            $table->string('desciption');
+            $table->string('description');
             $table->string('author');
             $table->string('publisher');
             $table->string('cover');
-            $table->float('price', 8, 2);
-            $table->integer('views');
-            $table->integer('stock');
+            $table->float('price');
+            $table->integer('views')->default(0)->unsigned();
+            $table->integer('stock')->default(0)->unsigned();
             $table->enum('status', ['PUBLISH', 'DRAFT']);
-            $table->timestamps();
             $table->integer('created_by');
-            $table->integer('deleted_by');
-            $table->integer('updated_by');
+            $table->integer('updated_by')->nullable();
+            $table->integer('deleted_by')->nullable();
+
+            $table->timestamps();
             $table->softDeletes();
 
             // $table->foreign('id')->references('book_id')->on('book_order');

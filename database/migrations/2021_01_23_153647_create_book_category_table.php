@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class CreateBookCategoryTable extends Migration
 {
@@ -14,14 +14,13 @@ class CreateBookCategoryTable extends Migration
     public function up()
     {
         Schema::create('book_category', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('book_id')->unsigned();
-            $table->integer('category_id')->unsigned();
+            $table->id();
+            $table->unsignedBigInteger('book_id')->nullable();
+            $table->unsignedBigInteger('category_id')->nullable();
             $table->timestamps();
 
-            // Foreign Key
-            $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade')->onUpdate('cascade');
-            // $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('book_id')->references('id')->on('books');
+            $table->foreign('category_id')->references('id')->on('categories');
         });
     }
 

@@ -70,12 +70,12 @@
   <div class="container-fluid h-100 p-0">
     <div style="min-height: 100%" class="flex-row d-flex align-items-stretch m-0">
         <div class="polished-sidebar bg-light col-12 col-md-3 col-lg-2 p-0 collapse d-md-inline" id="sidebar-nav">
-
             <ul class="polished-sidebar-menu ml-0 pt-4 p-0 d-md-block">
               <input class="border-dark form-control d-block d-md-none mb-4" type="text" placeholder="Search" aria-label="Search" />
               <li><a href="{{ route('home')}}"><span class="fas fa-home"></span> Home</a></li>
               <li><a href="{{ route('users.index')}}"><span class="fas fa-user"></span> Manage Users</a></li>
               <li><a href="{{ route('categories.index')}}"><span class="fas fa-database"></span> Manage Category</a></li>
+              <li><a href="{{ route('books.index')}}"><span class="fas fa-book"></span> Manage Books</a></li>
             </ul>
         </div>
         <div class="col-lg-10 col-md-9 p-4">
@@ -113,5 +113,8 @@
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+  @yield('footer-scripts')
+
 </body>
 </html>
