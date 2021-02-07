@@ -11,48 +11,106 @@
 </div>    
 @endif
 
-<div class="col-6">
+<div class="col-8">
     <div class="card border-primary my-3">
         <div class="card-header bg bg-primary text-white">
-            <h3>Update Kategori</h3>
+            <h3>Form Edit</h3>
         </div>
         <div class="card-body">
-            <form action="{{ route('categories.update', [$category->id]) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('books.update', [$book->id]) }}" method="POST" class="p-3 shadow-sm bg-white">
                 @csrf
                 <input type="hidden" name="_method" value="PUT">
+
                 <div class="form-group">
-                    <label for="">Category Name</label>
-                    <input type="text" class="form-control" name="name" id="name" value="{{ $category->name }}">
+                    <label for="">Title</label>
+                    <input type="text" class="form-control" name="title" id="title" placeholder="Book Title" value="{{ $book->title }}">
                 </div>
-                <div class="form-group">
-                    <label for="">Category Slug</label>
-                    <input type="text" class="form-control" name="slug" id="slug" value="{{ $category->slug }}">
-                </div>
-                <div class="form-group">
-                    <label for="image">Category Image</label>
-                    <div class="custom-file col-sm-12 mb-2">
-                        <input type="file" class="custom-file-input" name="image" id="image" onchange="previewImg()">
-                        <label class="custom-file-label">Pilih Gambar</label>
-                        <small class="text-muted">Kosongkan jika tidak ingin mengubah image</small>
+                <div class="form-group mb-5">
+                    <label for="">Book Cover</label>
+                    <div class="custom-file">
+                        <small class="text-muted text-left">Kosongkan jika tidak ingin mengubah Image</small>
+                        <div class="custom-file col-10">
+                            <input type="file" class="custom-file-input" name="image" id="image" onchange="previewImg()">
+                            <label class="custom-file-label" for="image">Pilih Gambar</label>
+                        </div>
+                        @if ($book->cover)
+                            <img src="{{ asset('storage/'.$book->cover) }}" class="img-thumbnail img-preview" width="60">
+                        @else
+                            <img src="{{ asset('storage/404/no_image.jpg') }}" class="img-thumbnail img-preview" width="60">
+                        @endif
                     </div>
-                    @if ($category->image)
-                    <img src="{{ asset('storage/'.$category->image) }}" class="img-thumbnail img-preview mt-3" width="150">
-                    @else
-                    <img src="{{ asset('storage/404/no_image.jpg') }}" class="img-thumbnail img-preview mt-3" width="150">
-                    @endif
                 </div>
-    
+                <div class="form-group">
+                    <label for="">Slug</label>
+                    <input type="text" class="form-control" name="slug" id="slug" placeholder="Slug-on-sistem" value="{{ $book->slug }}">
+                </div>
+                <div class="form-group">
+                    <label for="">Description</label>
+                    <textarea class="form-control" name="description" id="description" placeholder="Description">{{ $book->description }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="">Kategori</label>
+                    <select name="categories[]" id="categories" multiple class="form-control"></select>
+                </div>
+                <div class="form-group">
+                    <label for="">Stok</label>
+                    <input type="number" class="form-control" name="stock" id="stock" placeholder="0" value="{{ $book->stock }}">
+                </div>
+                <div class="form-group">
+                    <label for="">Author</label>
+                    <input type="text" class="form-control" name="author" id="author" placeholder="Author" value="{{ $book->author }}">
+                </div>
+                <div class="form-group">
+                    <label for="">Publisher</label>
+                    <input type="text" class="form-control" name="publisher" id="publisher" placeholder="Publisher" value="{{ $book->publisher }}">
+                </div>
+                <div class="form-group">
+                    <label for="">Price</label>
+                    <input type="number" class="form-control" name="price" id="price" placeholder="0" value="{{ $book->price }}">
+                </div>
+                <div class="form-group">
+                    <label for="">Status</label>
+                    <select name="status" id="status" class="form-control">
+                        <option {{ $book->status == 'PUBLISH' ? 'SELECTED' : '' }} value="PUBLISH">Publish</option>
+                        <option {{ $book->status == 'DRAFT' ? 'SELECTED' : '' }} value="DRAFT">Draft</option>
+                    </select>
+                </div>
+                
                 <hr class="my-3">
     
                 <div class="form-group">
-                    <label for=""></label>
-                    <button type="submit" class="btn btn-outline-success" name="save" id="save"> Save </button>
-                    <a href="{{ route('categories.index') }}" class="btn btn-outline-info"> Cancel </a>
+                    <button type="submit" class="btn btn-outline-success" value="PUBLISH"> Update </button>
+                    <a href="{{ route('books.index') }}" class="btn btn-outline-info"> Cancel </a>
                 </div>
-    
             </form>
       </div>
     </div>
 </div>
 
+@endsection
+
+@section('footer-scripts')
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    
+<script>
+    $('#categories').select2({
+        ajax: {
+            url: 'http://127.0.0.1:8000/ajax/categories/search',
+            processResults: function(data){
+                return {
+                    results: data.map(function(item){return {id: item.id,text: item.name}})
+                }
+            }
+        }
+    })
+
+    var categories = {!! $book->categories !!}
+
+    categories.forEach(function(category){
+        var option = new Option(category.name, category.id, true, true);
+        $('#categories').append(option).trigger('change');
+    });
+</script>
 @endsection

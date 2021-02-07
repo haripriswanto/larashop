@@ -31,6 +31,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::resource('users', UserController::class);
 Route::resource('profile', ProfileController::class);
+
+Route::get('/books/trash', [BookController::class, 'trash'])->name('books.trash');
+Route::post('/books/{book}/restore', [BookController::class, 'restore'])->name('books.restore');
+Route::delete('/books/{book}/delete-permanent', [BookController::class, 'deletePermanent'])->name('books.delete-permanent');
 Route::resource('books', BookController::class);
 
 Route::get('/categories/trash', [CategoryController::class, 'trash'])->name('categories.trash');

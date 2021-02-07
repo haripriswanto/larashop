@@ -14,7 +14,7 @@
 
 <div class="card border-primary-lighter">
     <div class="card-header bg bg-primary-lighter text-white">
-        Data Book
+        Data Book {{ ' | '. strtoupper(Request::get('status')) }}
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -28,7 +28,7 @@
                 <div class="col-sm-4">
                     <form action="{{route('books.index')}}" class="form-inline">
                         <div class="input-group mb-2">
-                            <input type="text" class="form-control"placeholder="Search By Name" name="keyword" value="{{ Request::get('keyword') }}" autofocus>
+                            <input type="text" class="form-control"placeholder="Search By Title Or Description" name="keyword" id="keyword" value="{{ Request::get('keyword') }}" autofocus>
                             <div class="input-group-append">
                                 <button type="submit" class="btn btn-outline-primary"><i class="fas fa-search"></i></button>
                             </div>
@@ -38,11 +38,17 @@
                 <div class="col-sm-5">
                     <ul class="nav nav-pills card-header-pills">
                         <li class="nav-item">
-                            <a class="nav-link active" href="{{route('books.index')}}">Published</a>
+                            <a class="nav-link {{ Request::get('status') == null & Request::path() == 'books' ? 'active' : '' }}" href="{{ route('books.index') }}">All</a>
                         </li>
-                        {{-- <li class="nav-item">
-                            <a class="nav-link" href="{{route('books.trash')}}">Trash</a>
-                        </li> --}}
+                        <li class="nav-item">
+                            <a class="nav-link {{ Request::get('status') == 'publish' ? 'active' : '' }}" href="{{ route('books.index', ['status' => 'publish']) }}">Publish</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ Request::get('status') == 'draft' ? 'active' : '' }}" href="{{ route('books.index', ['status' => 'draft']) }}">Draft</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ Request::path() == 'books/trash' ? 'active' : '' }}" href="{{ route('books.trash') }}">Trash</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -71,7 +77,7 @@
                         <td scope="row">{{ $number++ }}</td>
                         <td>
                             @if ($book->cover)
-                            <img src="{{ asset('storage/'.$book->cover) }}" width="96px">
+                            <img src="{{ asset('storage/'.$book->cover) }}" width="25">
                             @elseif($book->cover == 'default.png' OR $book->cover == '' )
                             No cover
                             @endif
@@ -86,11 +92,9 @@
                             @endif
                         </td>
                         <td>
-                            <ul class="pl-3">
-                                @foreach ($book->categories as $category)
-                                    <li>{{ $category->name }}</li>
-                                @endforeach
-                            </ul>
+                            @foreach ($book->categories as $category)
+                            <span class="badge badge-pill badge-dark text-white">{{ $category->name }}</span>
+                            @endforeach
                         </td>
                         <td>{{ $book->stock }}</td>
                         <td>{{ $book->price }}</td>
@@ -101,7 +105,7 @@
                             <a class="btn btn-outline-info btn-sm" href="{{ route('books.show', [$book->id]) }}">
                                 <i class="fas fa-eye"></i>
                             </a>
-                                <form action="{{ route('books.destroy', [$book->id]) }}" method="post" class="d-inline" onsubmit="return confirm('Move Data {{$book->name}} To trash?') ">
+                                <form action="{{ route('books.destroy', [$book->id]) }}" method="post" class="d-inline" onsubmit="return confirm('Move Data {{$book->title}} To trash?') ">
                                     @csrf
                                     <input type="hidden" name="_method" value="DELETE">
                                     <button type="submit" class="btn btn-outline-danger btn-sm">

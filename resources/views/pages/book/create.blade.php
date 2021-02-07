@@ -1,28 +1,5 @@
 @extends('layouts.global');
 
-@section('footer-scripts')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-
-<script>
-    $('#categories').select2({
-        ajax: {
-            url: 'http://127.0.0.1:8000/ajax/categories/search',
-            processResults: function(data){
-                return {
-                    results: data.map(function(item){
-                        return {
-                            id: item.id,
-                            text: item.name
-                        }
-                    })
-                }
-            }
-        }
-    })
-</script>
-@endsection
-
 @section('title') {{ $title }} @endsection
 
 @section('content') 
@@ -103,4 +80,28 @@
     </div>
 </div>
 
+@endsection
+
+
+@section('footer-scripts')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
+<script>
+    $('#categories').select2({
+        ajax: {
+            url: 'http://127.0.0.1:8000/ajax/categories/search',
+            processResults: function(data){
+                return {
+                    results: data.map(function(item){
+                        return {
+                            id: item.id,
+                            text: item.name
+                        }
+                    })
+                }
+            }
+        }
+    })
+</script>
 @endsection
