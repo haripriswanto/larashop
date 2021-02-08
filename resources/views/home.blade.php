@@ -15,7 +15,7 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                    {{ "Selamat Datang di sistem Study Laravel ". Auth::user()->name }}
                 </div>
             </div>
         </div>

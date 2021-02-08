@@ -76,6 +76,7 @@
               <li><a href="{{ route('users.index')}}"><span class="fas fa-user"></span> Manage Users</a></li>
               <li><a href="{{ route('categories.index')}}"><span class="fas fa-database"></span> Manage Category</a></li>
               <li><a href="{{ route('books.index')}}"><span class="fas fa-book"></span> Manage Books</a></li>
+              <li><a href="{{ route('orders.index')}}"><span class="fas fa-cart-plus"></span>Manage Orders</a></li>
             </ul>
         </div>
         <div class="col-lg-10 col-md-9 p-4">

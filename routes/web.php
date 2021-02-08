@@ -4,6 +4,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\OrderController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,3 +44,5 @@ Route::get('/categories/{id}/restore', [CategoryController::class, 'restore'])->
 Route::delete('/categories/{category}/delete-permanent', [CategoryController::class, 'deletePermanent'])->name('categories.delete-permanent');
 Route::resource('categories', CategoryController::class);
 Route::get('/ajax/categories/search', [CategoryController::class, 'ajaxSearch']);
+
+Route::resource('orders', OrderController::class);

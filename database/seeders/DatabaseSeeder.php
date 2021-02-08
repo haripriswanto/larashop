@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call('AdministratorSeeder');
+        // $this->call('AdministratorSeeder');
         $this->call('FakerUserSeeder');
         // \App\Models\User::factory(10)->create();
     }
