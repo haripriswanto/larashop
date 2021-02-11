@@ -9,4 +9,8 @@ class Profile extends Model
 {
     use HasFactory;
     protected $table = 'users';
+
+    public function Profile()
+    {
+    }
 }

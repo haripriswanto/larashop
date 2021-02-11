@@ -21,32 +21,24 @@
                 @csrf
                 <div class="form-group">
                     <label for="">Title</label>
-                    <input type="text" class="form-control {{ $errors->first('title') ? "is-invalid" : ""}} " name="title" id="title" autofocus value="{{ old('title') }}">
-                    <div class="invalid-feedback">
-                      {{$errors->first('title')}}
-                    </div>
+                    <input type="text" class="form-control" name="title" id="title" autofocus>
                 </div>
+                
                 <div class="form-group mb-5">
                     <label for="">Book Cover</label>
                     <div class="custom-file">
-                        <small class="text-muted text-left">Kosongkan jika tidak ingin mengubah Image</small>
                         <div class="custom-file col-10">
-                            <input type="file" class="custom-file-input" name="image" id="image" onchange="previewImg()" value="{{ old('image') }}">
+                            <input type="file" class="custom-file-input" name="image" id="image" onchange="previewImg()">
                             <label class="custom-file-label" for="image">Pilih Gambar</label>
                         </div>
                         <img src="{{ asset('storage/404/no_image.jpg') }}" class="img-thumbnail img-preview" width="60">
-                        <div class="invalid-feedback">
-                          {{$errors->first('image')}}
-                        </div>
+                        <small class="text-muted">Kosongkan jika tidak ingin mengubah Image</small>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="">Description</label>
-                    <textarea type="text" class="form-control {{$errors->first('description') ? "is-invalid" : ""}}" name="description" id="description">{{old('description')}}</textarea>
-                    <div class="invalid-feedback">
-                      {{$errors->first('description')}}
-                    </div>
+                    <textarea type="text" class="form-control" name="description" id="description"></textarea>
                 </div>
                 
                 <div class="form-group">
@@ -56,34 +48,22 @@
 
                 <div class="form-group">
                     <label for="">Stock</label>
-                    <input type="number" class="form-control {{ $errors->first('stock') ? "is-invalid" : ""}} " name="stock" id="stock" min=0 value=0 value="{{ old('stock') }}">
-                    <div class="invalid-feedback">
-                      {{$errors->first('stock')}}
-                    </div>
+                    <input type="number" class="form-control" name="stock" id="stock" min=0 value=0>
                 </div>
 
                 <div class="form-group">
                     <label for="">Author</label>
-                    <input type="text" class="form-control {{$errors->first('author') ? "is-invalid" : ""}} " name="author" id="author" value="{{ old('author') }}">
-                    <div class="invalid-feedback">
-                      {{$errors->first('author')}}
-                    </div>
+                    <input type="text" class="form-control" name="author" id="author">
                 </div>
                 
                 <div class="form-group">
                     <label for="">Publisher</label>
-                    <input type="text" class="form-control {{ $errors->first('publisher') ? "is-invalid" : ""}}" name="publisher" id="publisher" value="{{ old('publisher') }}">
-                    <div class="invalid-feedback">
-                      {{$errors->first('publisher')}}
-                    </div>
+                    <input type="text" class="form-control" name="publisher" id="publisher">
                 </div>
                 
                 <div class="form-group">
                     <label for="">Price</label>
-                    <input type="number" class="form-control {{ $errors->first('price') ? "is-invalid" : "" }}" name="price" id="price" value=0 value="{{ old('price')}} ">
-                    <div class="invalid-feedback">
-                      {{$errors->first('price')}}
-                    </div>
+                    <input type="number" class="form-control" name="price" id="price">
                 </div>
 
                 <hr class="my-3">

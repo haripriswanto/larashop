@@ -31,8 +31,9 @@ Route::match(["GET", "POST"], "/register", function () {
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::get('/users/{users}/profile', [UserController::class, 'profile'])->name('users.profile');
 Route::resource('users', UserController::class);
-Route::resource('profile', ProfileController::class);
+// Route::resource('profile', ProfileController::class);
 
 Route::get('/books/trash', [BookController::class, 'trash'])->name('books.trash');
 Route::post('/books/{book}/restore', [BookController::class, 'restore'])->name('books.restore');

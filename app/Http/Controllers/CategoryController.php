@@ -4,15 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\validation\Rule;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+
+            if (Gate::allows('staff-access')) return $next($request);
+
+            abort(403, 'Maaf, Hak akses anda dibatasi !');
+        });
+    }
+
+
     public function index(Request $request)
     {
         $category = Category::paginate(10);
@@ -47,6 +54,12 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+
+        \Validator::make($request->all(), [
+            "name" => "required|min:3|max:50",
+            "image" => "required",
+        ])->validate();
+
         $name = $request->get('name');
 
         $new_category = new Category;
@@ -101,10 +114,20 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $category = Category::findOrFail($id);
+
+        \Validator::make($request->all(), [
+            "name" => "required|min:3|max:50",
+            "image" => "required",
+            "slug" => [
+                "required",
+                Rule::unique("categories")->ignore($category->slug, "slug")
+            ]
+        ])->validate();
+
         $name = $request->get('name');
         $slug = $request->get('slug');
 
-        $category = Category::findOrFail($id);
 
         $category->name = $name;
         $category->slug = $slug;
@@ -136,7 +159,7 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         $category->delete();
 
-        return redirect()->route('categories.index')->with('status', 'Category Successfully move To Trash');
+        return redirect()->route('categories.trash')->with('status', 'Berhasil Pindahkan data ke Folder Sampah');
     }
 
     public function trash()
@@ -168,7 +191,7 @@ class CategoryController extends Controller
         } else {
             $category->forceDelete();
 
-            return redirect()->route('categories.index')->with('status', 'Berhasil Menghapus permanent kategori ' . $category->name);
+            return redirect()->route('categories.trash')->with('status', 'Berhasil Menghapus permanent kategori ' . $category->name);
         }
     }
 

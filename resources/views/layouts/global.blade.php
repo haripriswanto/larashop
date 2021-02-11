@@ -54,7 +54,7 @@
         </button>
         @endif 
         <div class="dropdown-menu dropdown-menu-right" id="navbar-dropdown">
-          <a href="{{ route('profile.index') }}" class="dropdown-item">Profile</a>
+          <a href="{{ route('users.profile', [\Auth::user()->id]) }}" class="dropdown-item">Profile</a>
           <a href="#" class="dropdown-item">Setting</a>
           <div class="dropdown-divider"></div>
           <li>

@@ -1,6 +1,6 @@
 @extends('layouts.global')
 
-@section('title') Profile User @endsection
+@section('title') Profile {{ \Auth::user()->name }} @endsection
 
 @section('content')
 
@@ -8,10 +8,10 @@
     <strong>@yield("title")</strong>
 </div> --}}
 
-<a href="{{ route('users.index') }}" class="btn btn-outline-danger btn-sm">
+<a href="#" onclick="window.history.go(-1); return false" class="btn btn-outline-danger btn-sm">
     Back <i class="fa fa-plus-square-o" aria-hidden="true"></i>
 </a>
-<a class="btn btn-outline-purple btn-sm" href="{{ route('users.edit', [$user->id]) }}"> Edit </a>
+{{-- <a class="btn btn-outline-purple btn-sm" href="{{ route('users.edit', [$user->id]) }}"> Edit </a> --}}
 <div class="card my-3">
     <div class="row no-gutters">
       <div class="col-md-4">
@@ -20,7 +20,6 @@
         @elseif($user->avatar == 'default.png' OR $user->avatar == '')
             <img src="{{ asset('storage/avatars/default.png') }}" class="card-img m-2">
         @endif
-        {{-- <img src="{{ asset('') }}" alt="..."> --}}
       </div>
       <div class="col-md-8">
         <div class="card-body">

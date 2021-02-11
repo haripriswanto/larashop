@@ -16,27 +16,38 @@
                 <input type="hidden" name="_method" value="PUT">
                 <div class="form-group">
                     <label for="">Category Name</label>
-                    <input type="text" class="form-control" name="name" id="name" value="{{ $category->name }}">
+                    <input type="text" class="form-control {{ $errors->first('name') ? "is-invalid" : "" }} " name="name" id="name" value="{{ $category->name }}">
+                    <div class="invalid_feedback">
+                        {{ $errors->first('name') }}
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="">Category Slug</label>
-                    <input type="text" class="form-control" name="slug" id="slug" value="{{ $category->slug }}">
-                </div>
-                <div class="form-group">
-                    <label for="image">Category Image</label>
-                    <div class="custom-file col-sm-12 mb-2">
-                        <input type="file" class="custom-file-input" name="image" id="image" onchange="previewImg()">
-                        <label class="custom-file-label">Pilih Gambar</label>
-                        <small class="text-muted">Kosongkan jika tidak ingin mengubah image</small>
+                    <input type="text" class="form-control {{ $errors->first('slug') ? "is-invalid" : "" }} " name="slug" id="slug" value="{{ $category->slug }}">
+                    <div class="invalid_feedback">
+                        {{ $errors->first('slug') }}
                     </div>
-                    @if ($category->image)
-                    <img src="{{ asset('storage/'.$category->image) }}" class="img-thumbnail img-preview mt-3" width="150">
-                    @else
-                    <img src="{{ asset('storage/404/no_image.jpg') }}" class="img-thumbnail img-preview mt-3" width="150">
-                    @endif
                 </div>
-    
-                <hr class="my-3">
+                <div class="form-group mb-5">
+                    <label for="">Category Image</label>
+                    <div class="custom-file">
+                        <small class="text-muted text-left">Kosongkan jika tidak ingin mengubah Image</small>
+                        <div class="custom-file col-10">
+                            <input type="file" class="custom-file-input {{ $errors->first('image') ? "is-invalid" : "" }}" name="image" id="image" onchange="previewImg()" value="{{ $category->image }}">
+                            <label class="custom-file-label" for="image">Pilih Gambar</label>
+                        </div>
+                        @if ($category->image)
+                        <img src="{{ asset('storage/'.$category->image) }}" class="img-thumbnail img-preview mt-3" width="50">
+                        @else
+                        <img src="{{ asset('storage/404/no_image.jpg') }}" class="img-thumbnail img-preview mt-3" width="50">
+                        @endif
+                        <div class="invalid_feedback">
+                            {{ $errors->first('image') }}
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-6">
     
                 <div class="form-group">
                     <label for=""></label>

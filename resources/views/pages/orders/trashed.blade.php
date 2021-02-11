@@ -14,7 +14,7 @@
 
 <div class="card border-primary-lighter">
     <div class="card-header bg bg-primary-lighter text-white">
-        Data Book {{ ' | '. strtoupper(Request::get('status')) }}
+        Data Book Trash
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -28,7 +28,7 @@
                 <div class="col-sm-4">
                     <form action="{{route('books.index')}}" class="form-inline">
                         <div class="input-group mb-2">
-                            <input type="text" class="form-control"placeholder="Search By Title Or Description" name="keyword" id="keyword" value="{{ Request::get('keyword') }}" autofocus>
+                            <input type="text" class="form-control"placeholder="Search By Name" name="keyword" value="{{ Request::get('keyword') }}" autofocus>
                             <div class="input-group-append">
                                 <button type="submit" class="btn btn-outline-primary"><i class="fas fa-search"></i></button>
                             </div>
@@ -41,10 +41,10 @@
                             <a class="nav-link {{ Request::get('status') == null & Request::path() == 'books' ? 'active' : '' }}" href="{{ route('books.index') }}">All</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ Request::get('status') == 'publish' ? 'active' : '' }}" href="{{ route('books.index', ['status' => 'publish']) }}">Publish</a>
+                            <a class="nav-link {{ Request::get('status' == 'publish' ? 'active' : '') }}" href="{{ route('books.index', ['status' => 'publish']) }}">Publish</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ Request::get('status') == 'draft' ? 'active' : '' }}" href="{{ route('books.index', ['status' => 'draft']) }}">Draft</a>
+                            <a class="nav-link {{ Request::get('status' == 'draft' ? 'active' : '') }}" href="{{ route('books.index', ['status' => 'draft']) }}">Draft</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ Request::path() == 'books/trash' ? 'active' : '' }}" href="{{ route('books.trash') }}">Trash</a>
@@ -77,9 +77,9 @@
                         <td scope="row">{{ $number++ }}</td>
                         <td>
                             @if ($book->cover)
-                                <img src="{{ asset('storage/'.$book->cover) }}" width="25">
-                            @else
-                                <img src="{{ asset('storage/404/no_image.jpg') }}" width="25">
+                            <img src="{{ asset('storage/'.$book->cover) }}" width="25">
+                            @elseif($book->cover == 'default.png' OR $book->cover == '' )
+                            No cover
                             @endif
                         </td>
                         <td>{{ $book->title }}</td>
@@ -99,19 +99,19 @@
                         <td>{{ $book->stock }}</td>
                         <td>{{ $book->price }}</td>
                         <td>
-                            <a class="btn btn-outline-purple btn-sm" href="{{ route('books.edit', [$book->id]) }}">
-                                <i class="fas fa-pencil-alt"></i>
-                            </a>
-                            <a class="btn btn-outline-info btn-sm" href="{{ route('books.show', [$book->id]) }}">
-                                <i class="fas fa-eye"></i>
-                            </a>
-                                <form action="{{ route('books.destroy', [$book->id]) }}" method="post" class="d-inline" onsubmit="return confirm('Move Data {{$book->title}} To trash?') ">
-                                    @csrf
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <button type="submit" class="btn btn-outline-danger btn-sm">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </form>
+                            <form action="{{ route('books.restore', [$book->id]) }}" method="post" class="d-inline" onsubmit="return confirm('Restore Data {{$book->title}} ?') ">
+                                @csrf
+                                <button type="submit" class="btn btn-outline-info btn-sm">
+                                    <i class="fas fa-window-restore"></i>
+                                </button>
+                            </form>
+                            <form action="{{ route('books.delete-permanent', [$book->id]) }}" method="post" class="d-inline" onsubmit="return confirm('Hapus Permanent Data {{$book->title}} ?') ">
+                                @csrf
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit" class="btn btn-outline-danger btn-sm">
+                                    <i class="fas fa-times-circle"></i>
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach

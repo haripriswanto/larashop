@@ -13,11 +13,11 @@ class ProfileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index()
     {
-        //
-        $user = Profile::findOrFail($id);
-        return view('pages.profile.index', ['user' => $user]);
+        // $id = \Auth::user()->id;
+        // $user = Profile::findOrFail($id);
+        // return view('pages.profile.index', ['user' => $user]);
     }
 
     /**
@@ -49,7 +49,8 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        //
+        $profile = Profile::findOrFail($id);
+        return view('pages.profile.index', ['user' => $profile]);
     }
 
     /**
