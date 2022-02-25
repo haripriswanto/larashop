@@ -40,13 +40,13 @@
 
 <body>
 
-    <nav class="navbar navbar-expand p-0">
+    <nav class="navbar navbar-expand p-0 bg bg-dark">
      <a class="navbar-brand text-center col-xs-12 col-md-3 col-lg-2 mr-0" href="{{route('home')}}"> Larashop </a>
       <button class="btn btn-link d-block d-md-none" data-toggle="collapse" data-target="#sidebar-nav" role="button" >
         <span class="fas fa-menu"></span>
       </button>
 
-      <input class="border-dark bg-primary-darkest form-control d-none d-md-block w-50 ml-3 mr-2" type="text" placeholder="Search" aria-label="Search">
+      {{-- <input class="border-dark bg-primary-darkest form-control d-none d-md-block w-50 ml-3 mr-2" type="text" placeholder="Search" aria-label="Search"> --}}
       <div class="dropdown d-none d-md-block">
         @if(Auth::user())
         <button class="btn btn-link btn-link-primary dropdown-toggle" id="navbar-dropdown" data-toggle="dropdown">
